@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
-const NewUser = () => {
+const NewUser = (props) => {
   const [user, setUser] = useState({
     username: '',
     password: '',
@@ -20,24 +20,31 @@ const NewUser = () => {
       
     }
 
+    // make a post request to retrieve a token from the api
     const handleSubmit = e => {
       e.preventDefault();
       axios
       .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/register', user)
+        .then(res => setUser(res))
+        .catch(err => console.log(err));
+        
+      
+      axios
+      .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', user)
         .then(res => {
           console.log(res.data);
-          setUser(res)  
-        //   .setItem(res.data.payload);
-          
+          localStorage.setItem('token', res.data.token);
+          props.history.push('/protected');
         })
         .catch(err => console.log(err))
+      
 
     };
-
-
     
-  // make a post request to retrieve a token from the api
-  // when you have handled the token, navigate to the BubblePage route
+
+
+
+
   return (
     <>
         <form onSubmit={handleSubmit}>

@@ -17,14 +17,11 @@ const SaltyUsers = () => {
             .catch(err => console.log(err))
     })
     
-
-    
-
     return (
         <>
            <ul> 
             {data.map(user => (
-                <li key={user.id}>{user.username}</li>    
+                <li key={user.id} >{user.username}</li>    
             ))}
            </ul>     
                 

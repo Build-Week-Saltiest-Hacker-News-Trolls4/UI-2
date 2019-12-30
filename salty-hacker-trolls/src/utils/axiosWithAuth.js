@@ -7,7 +7,8 @@ const axiosWithAuth =() => {
     return axios.create({
         baseURL: 'https://saltiest-hacker-news-trolls-be.herokuapp.com/api',
         headers: {
-            Authorization: token
+            Authorization: token,
+            Manifest: 'application/json'
         }
     });
 };
