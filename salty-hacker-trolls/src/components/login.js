@@ -17,14 +17,14 @@ const Login = (props) => {
     height: 500px; 
   `
 
-  const FormContainer = styled.div`
-    width: 90%;
-    height: 90%;
-    display: flex;
-    flex-flow: column nowrap;
-    background-color: white;
-    margin: auto;
-  `
+  // const FormContainer = styled.div`
+  //   width: 90%;
+  //   height: 90%;
+  //   display: flex;
+  //   flex-flow: column nowrap;
+  //   background-color: white;
+  //   margin: auto;
+  // `
 
 
     const handleSubmit = e => {
@@ -41,6 +41,7 @@ const Login = (props) => {
     };
 
     const handleChange = e => {
+      e.preventDefault();
       setCredentials({
         ...credentials,
         [e.target.name]: e.target.value,
@@ -49,9 +50,7 @@ const Login = (props) => {
     }
   
   return (
-    <>
-      <Container>
-        <FormContainer>
+    <>  
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -67,8 +66,6 @@ const Login = (props) => {
             />
             <button>Log in</button>
           </form>
-        </FormContainer>  
-      </Container>  
     </>
   )
 }
