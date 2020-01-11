@@ -1,73 +1,64 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import styled from 'styled-components';
+import {BrowserRouter as Router, Link} from 'react-router-dom';
+import { useFormik } from 'formik';
 // import axiosWithAuth from "../utils/axiosWithAuth";
 
 const Login = (props) => {
 
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
+  const StyledLink = styled(Link)`
+    color: white;
+    text-decoration: none;
+    margin: 1%;
+    
+  `
+  
+  const formik = useFormik({
+    initialValues: {
+        username: '',
+        password: ''
+    },
+    onSubmit: values => {
+        console.log(values)
+        axios
+        .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', values, null ,2)
+          .then(res => {
+            console.log(res.data);
+            localStorage.setItem('token', res.data.token);
+            props.history.push('/protected');
+          })
+          .catch(err => console.log(err))
+    },
   });
 
-  const Container = styled.div`
-    width: 90%;
-    margin: 0 auto;
-    background-color: gray;
-    height: 500px; 
-  `
-
-  // const FormContainer = styled.div`
-  //   width: 90%;
-  //   height: 90%;
-  //   display: flex;
-  //   flex-flow: column nowrap;
-  //   background-color: white;
-  //   margin: auto;
-  // `
-
-
-    const handleSubmit = e => {
-      e.preventDefault();
-      axios
-      .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', credentials)
-        .then(res => {
-          console.log(res.data);
-          localStorage.setItem('token', res.data.token);
-          props.history.push('/protected');
-        })
-        .catch(err => console.log(err))
-
-    };
-
-    const handleChange = e => {
-      e.preventDefault();
-      setCredentials({
-        ...credentials,
-        [e.target.name]: e.target.value,
-      })
-      
-    }
-  
   return (
-    <>  
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="username"
-              value={credentials.username}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-            />
-            <button>Log in</button>
-          </form>
+    <>
+    <div>
+      <h1 className='saltyh1'>Saltiest Hackers</h1>
+    </div>
+    <StyledLink to="/public">newUser</StyledLink><br />
+    <form onSubmit={formik.handleSubmit}>
+      <label htmlFor="username">UserName</label>
+      <input
+        id="username"
+        name="username"
+        type="username"
+        onChange={formik.handleChange}
+        value={formik.values.userName}
+      /><br/>
+      <label htmlFor="password">password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+      /><br/>
+      <button type="submit">Login</button>
+    </form>
     </>
-  )
+  );
 }
 
 
