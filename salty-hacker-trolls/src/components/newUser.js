@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from 'axios';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 const NewUser = (props) => {
-  const [user, setUser] = useState({
-    username: '',
-    password: '',
-    
-  });
-  console.log(user);
   
   const StyledLink = styled(Link)`
     color: black;
@@ -27,6 +21,14 @@ const NewUser = (props) => {
       },
       onSubmit: values => {
           console.log(values)
+          axios
+        .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/register/', values)
+          .then(res => {
+            console.log(res.data);
+            
+          })
+          .catch(err => console.log(err))
+
           axios
           .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', values, null ,2)
             .then(res => {
