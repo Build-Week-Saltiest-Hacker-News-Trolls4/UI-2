@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from 'axios';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 
 const NewUser = (props) => {
-  const [user, setUser] = useState({
-    username: '',
-    password: '',
-    
-  });
-  console.log(user);
   
   const StyledLink = styled(Link)`
-    color: black;
     text-decoration: none;
     margin: 1%;
+    
     
   `
 
@@ -26,11 +20,19 @@ const NewUser = (props) => {
           password: ''
       },
       onSubmit: values => {
-          console.log(values)
+         
+          axios
+        .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/register/', values)
+          .then(res => {
+            
+            
+          })
+          .catch(err => console.log(err))
+
           axios
           .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', values, null ,2)
             .then(res => {
-              console.log(res.data);
+             
               localStorage.setItem('token', res.data.token);
               props.history.push('/protected');
             })
@@ -44,10 +46,10 @@ const NewUser = (props) => {
     
     return (
       <>
-      <div>
+      <div className='header-link'>
         <h1 className='saltyh1'>Saltiest Hackers</h1>       
+        <StyledLink className='link' to="/login">Login</StyledLink><br />
       </div>
-      <StyledLink to="/login">Login</StyledLink><br />
       <form onSubmit={formik.handleSubmit}>
       <label htmlFor="username">UserName</label>
       <input

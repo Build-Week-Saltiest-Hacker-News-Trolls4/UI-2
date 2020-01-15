@@ -27,6 +27,24 @@ const SaltyUsers = () => {
             .catch(err => console.log(err))
     });
 
+    //used useEffect to .get new comments has been commented out due to backend not ready for adding new comments,
+    //I used axios withAuth and .get to return the list of new comments attached to the orgiginal salty comment using the original comments ID(comment_id) 
+
+    // const id  = comment_id;
+    //     useEffect(() => {
+    //         axiosWithAuth()
+    //         .get(`/added-comments/${id}`)
+    //         .then(response => {
+    //             setAddedComments(response.data);
+                
+    //         })
+    //     .catch(error => {
+    //     console.log('Server Error', error);
+    //     });
+    //     }, [id]);
+    
+    // below I used a axios .post to add new comment to database using original Id 
+
     // const addComment = comment => {
         
     //     const commentVal = {
@@ -34,7 +52,7 @@ const SaltyUsers = () => {
     //     }
 
     //     axiosWithAuth()
-    //         .post("save", comment)
+    //         .post("added-comments", comment_id)
     //         .then((res) => {
     //             console.log(res)
     //         })
@@ -43,15 +61,22 @@ const SaltyUsers = () => {
     //         })
     // };
 
+//     axiosWithAuth()
+//       .delete(`added-comments` newCommentId)
+//       .then(res => {
+//         // console.log(res);
+       
+//       })
+//       .catch(error => {
+//         console.log(error);
+//       });
+//     
+
 
     const logout = () => {
         localStorage.clear();
         window.location.href = '/login';
     }
-
-
-
-
 
     const columns = [
         
@@ -73,19 +98,18 @@ const SaltyUsers = () => {
         }
         
       ];
-      const addComment = () => {
-          
-      }
-
+      
       const DATA = data.map(d => ({
         Key: d.comment_id,
         UserNm: d.author,
         Comment: <p>{d.comment_text}</p>,
         Salty_Score: d.score,
-        Button: <Button label='Add' onClick={() => addComment()} />
+        
       }));
     
     return (
+
+        // Button: <Button label='Add' onClick={() => addComment()} />
         <>
             {/* <Favs/> */}
             <div>

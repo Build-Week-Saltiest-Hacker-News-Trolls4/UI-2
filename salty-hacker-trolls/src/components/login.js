@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from 'axios';
 import styled from 'styled-components';
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+
 // import axiosWithAuth from "../utils/axiosWithAuth";
 
 const Login = (props) => {
@@ -20,11 +21,12 @@ const Login = (props) => {
         password: ''
     },
     onSubmit: values => {
-        console.log(values)
+        
+
         axios
         .post('https://saltiest-hacker-news-trolls-be.herokuapp.com/api/login/', values, null ,2)
           .then(res => {
-            console.log(res.data);
+            
             localStorage.setItem('token', res.data.token);
             props.history.push('/protected');
           })
@@ -34,10 +36,11 @@ const Login = (props) => {
 
   return (
     <>
-    <div>
+    <div className='header-link'>
       <h1 className='saltyh1'>Saltiest Hackers</h1>
+      <StyledLink className='link' to="/public">newUser</StyledLink><br />
     </div>
-    <StyledLink to="/public">newUser</StyledLink><br />
+   
     <form onSubmit={formik.handleSubmit}>
       <label htmlFor="username">UserName</label>
       <input
